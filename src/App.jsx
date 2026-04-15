@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home';
@@ -17,12 +17,19 @@ import Logo from './components/Logo/Logo';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
 
+  // Initial loading effect
   useEffect(() => {
-    // Simulation of initial loading sequence
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Route change effect: Scroll to top and re-init animations
+  useEffect(() => {
+    window.scrollTo(0, 0);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -36,18 +43,21 @@ function App() {
       { threshold: 0.1 }
     );
 
-    document.querySelectorAll('.fade-in-up').forEach((el) => {
-      observer.observe(el);
-    });
+    // Wait a bit for React to render the new route content
+    const timer = setTimeout(() => {
+      document.querySelectorAll('.fade-in-up').forEach((el) => {
+        observer.observe(el);
+      });
+    }, 100);
 
     return () => {
-      clearTimeout(timer);
       observer.disconnect();
+      clearTimeout(timer);
     };
-  }, []);
+  }, [location.pathname]);
 
   return (
-    <Router>
+    <div className="app-layout">
       {isLoading && (
         <div className="global-preloader">
           <div className="preloader-logo">
@@ -93,7 +103,7 @@ function App() {
           </Route>
         </Routes>
       </div>
-    </Router>
+    </div>
   );
 }
 
