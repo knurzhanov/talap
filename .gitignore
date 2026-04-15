@@ -12,23 +12,8 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
+# Editor settings
+.vscode/
+.idea/
+*.swp
 *.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Assistant / AI tools
-.gemini/
-.antigravity/
-*.png
-*.webp
-project_report.md
-implementation_plan.md
-task.md
-walkthrough.md

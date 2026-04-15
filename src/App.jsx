@@ -19,7 +19,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Artificial delay for the premium preloader effect
+    // Simulation of initial loading sequence
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1500);
